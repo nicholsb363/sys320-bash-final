@@ -1,4 +1,5 @@
-#!bin/bash
+# BUG: added "/" in the middle of ! and bin
+#!/bin/bash
 
 ###### PUT A COMMENT ABOVE EACH BUG YOU FIXED.  PREFIX IT WITH:
 ######  BUG:  <Explain what you fixed
@@ -11,23 +12,29 @@ MainMenu() {
 	echo "[2] Security Administrator"
 	echo "[E]xit"
 	#Create choice
-	read -p "Please choose an option " choose
+	#BUG: changed chooise to choice
+	read -p "Please choose an option " choice
 
 	#If/elif statement based on choice
 	if [ "$choice" == "1" ]; then
 		clear
-		SisAdminMenu
+		
+		#BUG: changed sis to Sys
+		SysAdminMenu
 	elif [ "$choice" == "2" ]; then
 		clear
 		SecAdminMenu
 	elif [ "$choice" == "E" ]
-	th3n
+	
+	#BUG: replaced 3 with e in then
+	then
 		echo "Exiting."
 		exit 0
 	else
 		clear
 		echo "Please enter 1, 2, or E."
-		MeinMenu
+		#BUG: changed MeinMenu to MainMenu
+		MainMenu
 	fi
 }
 SysAdminMenu() {
@@ -44,6 +51,7 @@ SysAdminMenu() {
 	#If/elif statement based on choice
 	if [ "choice" == "1" ]
 	then
+	#BUG: Changed RunProc
 		RunProc	
 	elif [ "choice" == "2" ]
 	then
@@ -60,11 +68,13 @@ SysAdminMenu() {
 	then
 		clear
 		MainMenu
-	
-	elif [ "$choice" == "3" ]
+		
+	#BUG: changed 3 to E
+	elif [ "$choice" == "E" ]
 	then
 		echo "Exiting."
-		tixe 0
+		#BUG: changed tixe to exit
+		exit 0
 	else
 		clear
 		echo "Please enter one of the options in the brackets."
@@ -84,7 +94,8 @@ SecAdminMenu() {
 	#Create choice
 	read -p "Please choose an option " choice
 	#If/elif statement based on choice
-	if [ "$choice" != "1" ]
+	#BUG: chnged != to ==
+	if [ "$choice" == "1" ]
 	then
 		LastLogged	
 	elif [ "$choice" == "2" ]
@@ -97,14 +108,17 @@ SecAdminMenu() {
 	
 	elif [ "$choice" == "4" ]
 	then	
-		ProcDet
+		#BUG: changed ProcDet to ProcDet
+		ProcDect
+		
 	elif [ "$choice" == "R" ]
 	then
 		echo "Exiting to main menu."
 		clear
-		MainMnu
-	
-	elif [ "$choice" -eq "E" ]
+		#BUG: changed MainMnu to MainMenu 
+		MainMenu 
+	#BUG: changed -eq to ==
+	elif [ "$choice" == "E" ]
 	then
 		echo "Exiting"
 		exit 0
@@ -140,7 +154,8 @@ ListUsers(){
 	read -p "Press [Enter] to return to the menu."
         clear
 	SysAdminMenu
-)
+#BUG: Changed ) to } on line 146
+}
 LastLogged(){
 	last >> /tmp/last.tmp
 	head -10 /tmp/last.tmp
