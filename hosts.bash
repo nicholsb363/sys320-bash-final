@@ -5,7 +5,7 @@
 #BUG - user input did not require the user to enter a valid network address. Added a function to make the user \
 #re-enter the IP until it is valid
 function collect_ip() {
-	read -p "Enter /24 network address.(I.E. 192.168.2.0)" net_Add
+	read -p "Enter /24 network address.(I.E. 192.168.2.0): " net_Add
 	if [[ $(echo $net_Add | awk -F. ' { print $4 } ') -ne 0 ]]
 	then
 		echo "This is not a /24 network address"
