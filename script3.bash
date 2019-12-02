@@ -49,19 +49,21 @@ SysAdminMenu() {
 	#Create choice
 	read -p "Please choose an option " choice
 	#If/elif statement based on choice
-	if [ "choice" == "1" ]
+	#BUG: Changed choice to $choice
+	if [ "$choice" == "1" ]
 	then
 	#BUG: Changed RunProc
-		RunProc	
-	elif [ "choice" == "2" ]
+		RunProc
+	#BUG: Changed choice to $choice
+	elif [ "$choice" == "2" ]
 	then
 		RunServ
 	
 	elif [ "$choice" == "3" ]
 	then
 		InstSoft
-	
-	elif [ "$chooice" == "4" ]
+	#BUG: Corrected $choice spelling
+	elif [ "$choice" == "4" ]
 	then	
 		ListUsers
 	elif [ "$choice" == "R" ]
@@ -129,28 +131,35 @@ SecAdminMenu() {
 	fi
 }
 RunProc(){
-	ps | less
+	#BUG: Removed less, added -ef, added clear
+	clear
+	ps -ef
 	read -p "Press [Enter] to return to the menu."
 	clear
 	SysAdminMenu
 }
 RunServ(){
-	service --status-all | grep + | less
+	#BUG: Removed less, added clear
+	clear
+	service --status-all | grep +
 	read -p "Press [Enter] to return to the menu."
 	clear
 	SysAdminMenu
 }
 InstSoft(){
-	deepkg -l | less
+	#BUG: Removed less, corrected dpkg command
+	dpkg -l
 	read -p "Press [Enter] to return to the menu."
 	clear
 	SysAdminMenu
 }
 ListUsers(){
+	clear
 	 awk -F:  ' BEGIN { format = "%-20s -5s %-6s %-28s %s\n"
 	printf format, "Username", "UID", "GID", "Home Directory", "Shell"
 	printf format, "--------", "---", "---", "--------------", "-----"}
-	{ printf format, 1, $3, $4, $6, $7 } ' /etc/passwd | less
+	#BUG: Changed 1 to $1
+	{ printf format, $1, $3, $4, $6, $7 } ' /etc/passwd #| less
 	read -p "Press [Enter] to return to the menu."
         clear
 	SysAdminMenu
@@ -166,18 +175,22 @@ LastLogged(){
 LastOfFile(){
 	ls /var/log
 	read -p "Please type in the log file that you would like to view.  " log
-	tail -20 /var/auth/$log | less
+	#BUG: Changed path to /var/log
+	clear
+	tail -20 /var/log/$log #| less
 	read -p "Press [Enter] to return to the menu."
         clear
 	SecAdminMenu
 }
 Lsof()(
+	clear
 	lsof -i -n
 	read -p "Press [Enter] to return to the menu."
 	clear
 	SecAdminMenu
 )
 ProcDect(){
+	clear
 	read -p "Please list the process ID that you would like details for. " PID
 	lsof -p $PID
 	read -p "Press [Enter] to return to the menu."
